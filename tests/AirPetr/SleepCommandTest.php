@@ -8,19 +8,27 @@ class SleepCommandTest extends TestCase
 {
     public function testCommand()
     {
-        $engine = new ActiveObject();
         $impliedSleepTime = 2;
-        $sleepCommand = new SleepCommand($impliedSleepTime, $engine, $this->getEchoCommand());
-        $engine->addCommand($sleepCommand);
+        $engine = $this->prepareEngine($impliedSleepTime);
 
         $startTime = time();
         $engine->run();
         $stopTime = time();
 
-        $actualSleepTime = $stopTime - $startTime;
-
-        $this->assertGreaterThanOrEqual($impliedSleepTime, $actualSleepTime);
+        $this->assertGreaterThanOrEqual($impliedSleepTime, $stopTime - $startTime);
         $this->expectOutputString('Hello World');
+    }
+
+    /**
+     * @param int $sleepTime
+     * @return ActiveObject
+     */
+    protected function prepareEngine(int $sleepTime): ActiveObject
+    {
+        $engine = new ActiveObject();
+        $sleepCommand = new SleepCommand($sleepTime, $engine, $this->getEchoCommand());
+        $engine->addCommand($sleepCommand);
+        return $engine;
     }
 
     /**
