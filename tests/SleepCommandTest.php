@@ -1,7 +1,5 @@
 <?php
 
-namespace AirPetr;
-
 use PHPUnit\Framework\TestCase;
 
 class SleepCommandTest extends TestCase
@@ -21,22 +19,22 @@ class SleepCommandTest extends TestCase
 
     /**
      * @param int $sleepTime
-     * @return ActiveObject
+     * @return \AirPetr\ActiveObject
      */
-    protected function prepareEngine(int $sleepTime): ActiveObject
+    protected function prepareEngine(int $sleepTime): \AirPetr\ActiveObject
     {
-        $engine = new ActiveObject();
-        $sleepCommand = new SleepCommand($sleepTime, $engine, $this->getEchoCommand());
+        $engine = new \AirPetr\ActiveObject();
+        $sleepCommand = new \AirPetr\SleepCommand($sleepTime, $engine, $this->getEchoCommand());
         $engine->addCommand($sleepCommand);
         return $engine;
     }
 
     /**
-     * @return Command
+     * @return \AirPetr\Command
      */
-    private function getEchoCommand(): Command
+    private function getEchoCommand(): \AirPetr\Command
     {
-        return new class implements Command {
+        return new class implements \AirPetr\Command {
             public function execute()
             {
                 echo 'Hello World';
